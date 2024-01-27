@@ -1,0 +1,26 @@
+"""
+Attribute Validation Metaclass: Design a metaclass that performs custom validation
+on attributes declared during class creation. In this example, the metaclass ensures
+that all attributes must be integers.
+"""
+
+# Define the metaclass
+class AttributeValidationMeta(type):
+    def __new__(cls, name, bases, dct):
+        # Iterate through the attributes in the class dictionary
+        for attribute_name, attribute_value in dct.items():
+            # Check if the attribute is an integer
+            if not isinstance(attribute_value, int):
+                raise TypeError(f"Attribute '{attribute_name}' must be an integer.")
+        
+        # Create the class using the default type.__new__
+        return super().__new__(cls, name, bases, dct)
+
+# Use the metaclass in the class declaration
+class MyClass(metaclass=AttributeValidationMeta):
+    # Attributes with custom validation
+    x = 10
+    y = 20
+
+    # This will raise a TypeError because 'z' is not an integer
+    z = "not_an_integer"
