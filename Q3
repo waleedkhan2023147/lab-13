@@ -1,0 +1,30 @@
+"""
+Mixin Classes: Create Mixin classes that provide specific functionalities (e.g., logging, serialization)
+and utilize them through multiple inheritance.
+"""
+
+# Mixin class for logging functionality
+class LoggingMixin:
+    def log_message(self, message):
+        print(f"Log: {message}")
+
+# Mixin class for serialization functionality
+class SerializationMixin:
+    def serialize(self):
+        return f"Serialized data: {str(self.__dict__)}"
+
+# Main class utilizing Mixin classes through multiple inheritance
+class MyClass(LoggingMixin, SerializationMixin):
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+
+# Example usage
+obj = MyClass(name="Example", value=42)
+
+# Using methods from LoggingMixin
+obj.log_message("This is a log message")
+
+# Using methods from SerializationMixin
+serialized_data = obj.serialize()
+print(serialized_data)
