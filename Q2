@@ -1,0 +1,32 @@
+"""
+Hooking Class Creation: Build a metaclass that intercepts specific steps of class
+creation (e.g., attribute addition, method creation) and injects custom logic.
+"""
+
+# Define the metaclass
+class HookingMeta(type):
+    def __new__(cls, name, bases, dct):
+        # Custom logic before class creation
+        print(f"Intercepting class creation for class '{name}'")
+
+        # Custom logic for attribute addition
+        for attribute_name, attribute_value in dct.items():
+            print(f"Intercepting attribute addition: '{attribute_name}'")
+
+        # Custom logic for method creation
+        for method_name, method_value in dct.items():
+            if callable(method_value):
+                print(f"Intercepting method creation: '{method_name}'")
+
+        # Create the class using the default type.__new__
+        return super().__new__(cls, name, bases, dct)
+
+# Use the metaclass in the class declaration
+class MyHookedClass(metaclass=HookingMeta):
+    # Attributes and methods with custom logic
+    x = 10
+
+    def my_method(self):
+        return "Hello, World!"
+
+# Output will include the custom logic messages
